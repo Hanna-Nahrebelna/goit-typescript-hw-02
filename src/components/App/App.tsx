@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-// import ImageGallery from "../ImageGallery/ImageGallery";
-// import { getImages } from "../image-api";
-// import SearchBar from "../SearchBar/SearchBar";
-// import Loader from "../Loader/Loader";
-// import ErrorMessage from "../ErrorMessage/ErrorMessage";
-// import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
-// import ImageModal from "../ImageModal/ImageModal";
+import ImageGallery from "../ImageGallery/ImageGallery";
+import { getImages } from "../image-api";
+import SearchBar from "../SearchBar/SearchBar";
+import Loader from "../Loader/Loader";
+import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
+import ImageModal from "../ImageModal/ImageModal";
 
 
 
