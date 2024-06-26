@@ -1,8 +1,13 @@
 import axios from "axios";
 
-export const getImages = async (setSearchQuery, setPage) => {
+export const getImages = async <T>(
+  setSearchQuery: string,
+  setPage: number
+): Promise<T> => {
   try {
-    const response = await axios.get(`https://api.unsplash.com/search/photos`, {
+    const response = await axios.get<T>(
+      `https://api.unsplash.com/search/photos`,
+    {
       params: {
         query: setSearchQuery,
         client_id: "zHEw6CcLWZnaWQw550Q4HwBUQyT8PdGomb-bZziyO_E",
@@ -11,7 +16,6 @@ export const getImages = async (setSearchQuery, setPage) => {
       },
     });
 
-    // return response.data.results;
     return response.data;
   } catch (error) {
     console.error("Error fetching articles:", error);

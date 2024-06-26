@@ -1,7 +1,8 @@
 import { Audio } from 'react-loader-spinner';
 import css from './Loader.module.css'
-export default function Loader(){
 
+
+export default function Loader() {
     return(
         <div className={css.loader}>        
         <Audio
@@ -9,8 +10,8 @@ export default function Loader(){
   width = "100"
   color = "green"
   ariaLabel="audio-loading"
-  wrapperStyle
-  wrapperClass
+//   wrapperStyle
+//   wrapperClass
 />
 <p>Loading data, please wait...</p>
         </div>
