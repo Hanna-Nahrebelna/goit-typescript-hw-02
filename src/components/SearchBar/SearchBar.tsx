@@ -1,7 +1,7 @@
 import toast, { Toaster } from "react-hot-toast";
 import css from "./SearchBar.module.css";
 
-interface Target extends EventTarget {
+interface Target extends HTMLFormElement {
   query: HTMLInputElement;
 }
 

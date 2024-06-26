@@ -37,7 +37,7 @@ export default function App() {
       try {
         setLoading(true);
         setError(false);
-        const responce: Responce = await getImages(searchQuery, page);
+        const responce = await getImages<Responce>(searchQuery, page);
 
         const { results, total } = responce;
        
