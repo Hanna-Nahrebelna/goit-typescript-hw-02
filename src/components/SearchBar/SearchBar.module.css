@@ -1,7 +1,6 @@
 .header {
+  width: 1550px;
   background-color: rgb(60, 184, 103);
-  margin: 0;
-  display: block;
 }
 
 .form {
