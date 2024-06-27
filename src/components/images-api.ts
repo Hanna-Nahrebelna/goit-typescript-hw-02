@@ -9,7 +9,7 @@ export const getPhoto = async <T>(query: string, page: number): Promise<T> => {
         page: page,
         per_page: 15,
   }
-  const response = await axios.get("/photos", {params});
+  const response = await axios.get<T>("/photos", {params});
   return response.data;
 };
 

@@ -11,8 +11,9 @@ import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 
 import { Photo } from "../App/App.types";
 
+
 interface ItemsPhoto {
-  results: [];
+  results: Photo[];
   total: number;
 }
 
@@ -38,12 +39,16 @@ const [photoUrl, setPhotoUrl] = useState<string>("");
         setError(false); 
         
         const items = await getPhoto<ItemsPhoto>(submitQuery, page);
-        const { results, total } = items;
 
-          setPhoto((prevState) => [...prevState, ...results]);
-          setIsLastPhoto(page < Math.ceil(total / 12)); 
+        if (!items || !items.results || typeof items.total !== 'number') {
+          throw new Error('Invalid data format');
+        }
+
+        const { results, total } = items;
+        setPhoto((prevState) => [...prevState, ...results]);
+        setIsLastPhoto(page < Math.ceil(total / 12)); 
         
-      } catch (error) {        
+      } catch (error) {          
           setError(true);
       } finally {
           setIsLoad(false);
