@@ -1,19 +1,14 @@
-import { Audio } from 'react-loader-spinner';
+import { Circles } from 'react-loader-spinner';
 import css from './Loader.module.css'
 
 
 export default function Loader() {
-    return(
-        <div className={css.loader}>        
-        <Audio
-  height = "100"
-  width = "100"
-  color = "green"
-  ariaLabel="audio-loading"
-//   wrapperStyle
-//   wrapperClass
+return(
+    <div className={css.loader}>        
+    <Circles height = "80" width = "100" color = "#4fa94d" ariaLabel="circles-loading" wrapperStyle={{}} wrapperClass="" 
+    visible={true}
 />
-<p>Loading data, please wait...</p>
+<p>Loading photo, please wait...</p>
         </div>
 
     )

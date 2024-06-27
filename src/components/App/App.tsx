@@ -1,6 +1,5 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import { getImages } from "../image-api";
+import { getPhoto } from "../images-api";
 
 import ImageGallery from "../ImageGallery/ImageGallery";
 import ImageModal from "../ImageModal/ImageModal";
@@ -10,91 +9,72 @@ import Loader from "../Loader/Loader";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import LoadMoreBtn from "../LoadMoreBtn/LoadMoreBtn";
 
-import { Image } from "../App/App.types";
+import { Photo } from "../App/App.types";
 
-interface Responce {
+interface ItemsPhoto {
   results: [];
   total: number;
 }
 
-export default function App() {
-  const [images, setImages] = useState<Image[]>([]);
-  const [error, setError] = useState<boolean>(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [page, setPage] = useState<number>(1);
-  const [searchQuery, setSearchQuery] = useState<string>("");
-  const [totalPage, setTotalPage] = useState<boolean>(false);
- const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
- const [selectedImageUrl, setSelectedImageUrl] = useState<string>("");
+const App = () => {
+const [photo, setPhoto] = useState<Photo[]>([]);
+const [error, setError] = useState<boolean>(false);
+const [isLoad, setIsLoad] = useState<boolean>(false);
+const [page, setPage] = useState<number>(1);
+const [submitQuery, setSubmitQuery] = useState<string>("");
+const [isLastPhoto, setIsLastPhoto] = useState<boolean>(false);
+const [modalOpen, setModalOpen] = useState<boolean>(false);
+const [photoUrl, setPhotoUrl] = useState<string>("");
 
   
   useEffect(() => {
-    if (searchQuery.trim() === "") {
+    if (submitQuery.trim() === "") {
       return;
     }
   
-    async function fetchImages(): Promise<void> {
+    async function fetchPhotos(): Promise<void> {
       try {
-        setLoading(true);
-        setError(false);
-        const responce = await getImages<Responce>(searchQuery, page);
-
-        const { results, total } = responce;
-       
-        setImages((prevState) => [...prevState, ...results]);
-         setTotalPage(page < Math.ceil(total / 15));
+        setIsLoad(true);
+        setError(false); 
         
-      } catch (error) {
-        setError(true);
+        const items = await getPhoto<ItemsPhoto>(submitQuery, page);
+        const { results, total } = items;
+
+          setPhoto((prevState) => [...prevState, ...results]);
+          setIsLastPhoto(page < Math.ceil(total / 12)); 
+        
+      } catch (error) {        
+          setError(true);
       } finally {
-        setLoading(false);
-      }
+          setIsLoad(false);
+      }             
+      
     }
 
-    fetchImages();
-  }, [searchQuery, page]);
+    fetchPhotos();
+  }, [submitQuery, page]);
 
-  const handleSearch: (query: string) => Promise<void> = async (query)  => {
-    setSearchQuery(query);
+  const userSearch: (data: string) => Promise<void> = async (data)  => {
+    setSubmitQuery(data);
     setPage(1);
-    setImages([]);
+    setPhoto([]);
   };
 
-  const hendleLoadMore: () => Promise<void> = async () => {
-    setPage(page + 1);
-   
-  };
-// modal
-    const openModal: (imageUrl: string) => void = (imageUrl) => {
-      setSelectedImageUrl(imageUrl);
-      setModalIsOpen(true);
-    };
-
-  const closeModal: () => void = () => {
-      setSelectedImageUrl("");
-      setModalIsOpen(false);
-  };
-
+  const loadMoreClick: () => Promise<void> = async () => { setPage(page + 1) };
+  const openModal: (url: string) => void = (url) => {setPhotoUrl(url); setModalOpen(true)};
+  const closeModal: () => void = () => { setPhotoUrl(""); setModalOpen(false) };
+  
 
   return (
     <div>
-      <SearchBar onSearch={handleSearch} />
-
+      <SearchBar onSearch={userSearch} />
       {error && <ErrorMessage />}
-
-      {images.length > 0 && (
-        <ImageGallery items={images} onImageClick={openModal} />
-      )}
-      {totalPage && <LoadMoreBtn onClick={hendleLoadMore} />}
-
-      {loading && <Loader />}
-
-   
-      <ImageModal
-        isOpen={modalIsOpen}
-        onClose={closeModal}
-        imageUrl={selectedImageUrl}
-      />
+      {photo.length > 0 && (<ImageGallery items={photo} onPhotoClick={openModal} />)}
+      {isLastPhoto && <LoadMoreBtn onClick={loadMoreClick} />}
+      {isLoad && <Loader />}
+      <ImageModal open={modalOpen} close={closeModal} photoUrl={photoUrl} />      
     </div>
   );
 }
+
+export default App;

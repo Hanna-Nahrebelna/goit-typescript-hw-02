@@ -1,32 +1,26 @@
 import toast, { Toaster } from "react-hot-toast";
 import css from "./SearchBar.module.css";
 
-interface Target extends HTMLFormElement {
-  query: HTMLInputElement;
-}
 
 interface SearchBarProps {
   onSearch: (query: string) => void;
 }
 
-export default function SearchBar({ onSearch }: SearchBarProps) {
-
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const form = evt.target as Target;
-    const query = form.query.value;
+    const form = evt.target as HTMLFormElement;
+    const query = form.querySelector('input[name="query"]') as HTMLInputElement;
+    const queryValue = query.value.trim();
 
-    if (query.trim() === "") {
-      toast("Please fill in search folder", {
-        style: {
-          color: 'red',   
-        },
+    if (queryValue === "") {
+      toast("Please fill in search form", {
+        style: { color: 'blue' },
       });
       return;
     }
 
-    onSearch(query);
-    // form.reset();
+    onSearch(queryValue);    
   };
 
   return (
@@ -48,3 +42,5 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
     </header>
   );
 }
+
+export default SearchBar;

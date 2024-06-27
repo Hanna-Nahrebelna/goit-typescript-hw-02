@@ -1,24 +1,23 @@
+import React from 'react';
 import ImageCard from "../ImageCard/ImageCard";
 import css from "./ImageGallery.module.css";
-import { Image } from "../App/App.types";
-import { Link } from "../App/App.types";
+import { Photo } from "../App/App.types";
 
-interface ImageGalleryProps {
-  items: Image[];
-  onImageClick: (slug: string) => void;
+interface PhotoGalleryProps {
+  items: Photo[];
+  onPhotoClick: (slug: string) => void;
 }
 
-
-const ImageGallery: React.FC<ImageGalleryProps> = ({ items, onImageClick }) => {
+const ImageGallery: React.FC<PhotoGalleryProps> = ({ items, onPhotoClick }) => {
   return (
     <ul className={css.imgList}>
       {items.map(({ id, urls, slug }) => (
         <li key={id}>
-          <ImageCard imgLink={urls} imgSlug={slug} onClick={onImageClick} />
+          <ImageCard link={urls} title={slug} onClick={onPhotoClick} />
         </li>
       ))}
     </ul>
   );
 };
 
-export default ImageGallery
+export default ImageGallery;

@@ -1,10 +1,10 @@
-export interface Link {
+export interface LinksPhoto {
   small: string;
   regular: string;
 }
 
-export interface Image {
+export interface Photo {
   id: string;
-  urls: Link;
+  urls: LinksPhoto;
   slug: string;
 }

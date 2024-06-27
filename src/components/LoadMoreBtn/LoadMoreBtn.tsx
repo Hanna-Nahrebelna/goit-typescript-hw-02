@@ -4,11 +4,10 @@ interface LoadMoreBtnProps {
   onClick: () => void;
 }
 
-export default function LoadMoreBtn({ onClick }: LoadMoreBtnProps) {
-   
-  return (
-    <button className={css.btnmore} type="button" onClick={onClick} >
+const LoadMoreBtn: React.FC<LoadMoreBtnProps> = ({ onClick }) => (
+  <button className={css.btnmore} type="button" onClick={onClick}>
       Load more
-    </button>
-  );
-}
+  </button>
+)
+
+export default LoadMoreBtn
