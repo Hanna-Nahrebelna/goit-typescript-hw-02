@@ -16,7 +16,7 @@ const PhotoCard: React.FC<PhotoCardProps> = ({ link: { small }, title, onClick }
         className={css.card}
         src={small}
         alt={title}
-        onClick={() => click}
+        onClick={click}
       />
     </div>
   );
